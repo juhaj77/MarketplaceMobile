@@ -12,7 +12,7 @@ A simple practice project that pairs a React Native (Expo) frontend with a Node.
 
 ## Repository Layout
 ```
-MarketplaceAndroid/
+Marketplacemobile/
 ├─ frontend/        # React Native (Expo) app
 └─ server/          # Node.js/Express API + Swagger
 ```
@@ -136,3 +136,4 @@ These may vary depending on your existing `package.json` scripts.
 
 ## License
 This project is for learning and practice purposes. Add a license of your choice if distributing.
+
