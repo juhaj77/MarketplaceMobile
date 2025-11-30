@@ -132,9 +132,6 @@ These may vary depending on your existing `package.json` scripts.
 - Images not uploading: re-check Cloudinary environment variables and any server upload route logs.
 - Expo cannot reach the API: ensure the device/emulator can resolve your machine IP; on physical devices use your machine’s LAN IP instead of `localhost` for `EXPO_PUBLIC_API_URL`.
 
----
 
-## License
-This project is for learning and practice purposes. Add a license of your choice if distributing.
 
 
