@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: Mini Marketplace API
+  version: 0.1.0
+servers:
+  - url: /api
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [displayName, email, password]
+              properties:
+                displayName: { type: string }
+                email: { type: string, format: email }
+                password: { type: string, minLength: 8 }
+      responses:
+        '201':
+          description: Created
+  /auth/login:
+    post:
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string }
+      responses:
+        '200':
+          description: OK
+  /products:
+    get:
+      summary: List products
+      parameters:
+        - in: query
+          name: page
+          schema: { type: integer }
+        - in: query
+          name: limit
+          schema: { type: integer }
+        - in: query
+          name: search
+          schema: { type: string }
+        - in: query
+          name: minPrice
+          schema: { type: number }
+        - in: query
+          name: maxPrice
+          schema: { type: number }
+        - in: query
+          name: sort
+          schema: { type: string }
+      responses:
+        '200': { description: OK }
+    post:
+      summary: Create product
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [title, description, price]
+              properties:
+                title: { type: string }
+                description: { type: string }
+                price: { type: number }
+                image: { type: string, format: binary }
+      responses:
+        '201': { description: Created }
+  /products/{id}:
+    get:
+      summary: Get product by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: OK }
+        '404': { description: Not found }
+    put:
+      summary: Update product
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: false
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title: { type: string }
+                description: { type: string }
+                price: { type: number }
+                image: { type: string, format: binary }
+      responses:
+        '200': { description: OK }
+        '403': { description: Forbidden }
+        '404': { description: Not found }
+    delete:
+      summary: Delete product
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: OK }
+        '403': { description: Forbidden }
+        '404': { description: Not found }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
